@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-package MooseX::Role::Searchable;
+package MooseX::Role::Matcher;
 use MooseX::Role::Parameterized;
 use List::Util qw/first/;
 use List::MoreUtils qw/any apply/;
