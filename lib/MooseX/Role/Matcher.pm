@@ -13,7 +13,7 @@ role {
 my $p = shift;
 my $default = $p->default_match;
 
-sub _apply_to_matches {
+method _apply_to_matches => sub {
     my $on_match = shift;
     my $code = shift;
     my $matcher = shift;
@@ -35,26 +35,26 @@ sub _apply_to_matches {
     }
 
     return $on_match->(sub { $code->($_) }, (grep { $_->match($matcher => $value) } @_));
-}
+};
 
-sub first_match {
+method first_match => sub {
     _apply_to_matches(\&first, @_);
-}
+};
 
-sub each_match {
+method each_match => sub {
     _apply_to_matches(\&apply, @_);
-}
+};
 
-sub grep_matches {
+method grep_matches => sub {
     # XXX: can you use grep like this?
     _apply_to_matches(\&grep, @_);
-}
+};
 
-sub any_match {
+method any_match => sub {
     _apply_to_matches(\&any, @_);
-}
+};
 
-sub _match {
+method _match => sub {
     my $self = shift;
     my $value = shift;
     my $seek = shift;
@@ -69,9 +69,9 @@ sub _match {
         }
     }
     return $value eq $seek;
-}
+};
 
-sub match {
+method match => sub {
     my $self = shift;
     my %args = @_;
 
@@ -93,7 +93,7 @@ sub match {
     }
 
     return 1;
-}
+};
 
 };
 
