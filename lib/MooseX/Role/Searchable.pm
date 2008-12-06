@@ -29,6 +29,10 @@ sub _apply_to_matches {
     }
 
     my $value = shift;
+    if (!defined($value)) {
+        # they passed in only one argument. assume they are checking identity
+        ($matcher, $value) = ($default, $matcher);
+    }
 
     return $on_match->(sub { $code->($_) }, (grep { $_->match($matcher => $value) } @_));
 }
