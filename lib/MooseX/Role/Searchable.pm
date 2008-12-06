@@ -1,8 +1,17 @@
 #!/usr/bin/perl
 package MooseX::Role::Searchable;
-use Moose::Role;
+use MooseX::Role::Parameterized;
 use List::Util qw/first/;
 use List::MoreUtils qw/any apply/;
+
+parameter default_match => (
+    is  => 'ro',
+    isa => 'Str',
+);
+
+role {
+my $p = shift;
+my $default = $p->default_match;
 
 sub _apply_to_matches {
     my $on_match = shift;
@@ -16,7 +25,7 @@ sub _apply_to_matches {
 
     # pass in a regex? return the first item for which the regex matches ID
     if (ref($matcher) eq 'Regexp') {
-        return $on_match->(sub { $code->($_) }, (grep { $_->match(identity => $matcher) } @_));
+        return $on_match->(sub { $code->($_) }, (grep { $_->match($default => $matcher) } @_));
     }
 
     my $value = shift;
@@ -82,6 +91,8 @@ sub match {
     return 1;
 }
 
-no Moose::Role;
+};
+
+no MooseX::Role::Parameterized;
 
 1;
