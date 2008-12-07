@@ -14,6 +14,7 @@ my $p = shift;
 my $default = $p->default_match;
 
 method _apply_to_matches => sub {
+    my $class = shift;
     my $on_match = shift;
     my $matcher = shift;
     my @list = @{ shift() };
@@ -22,20 +23,25 @@ method _apply_to_matches => sub {
 };
 
 method first_match => sub {
-    _apply_to_matches(\&first, sub { $_->match(@_) }, @_);
+    my $class = shift;
+    $class->_apply_to_matches(\&first, sub { $_->match(@_) }, @_);
 };
 
 method each_match => sub {
-    _apply_to_matches(\&apply, shift, @_);
+    my $class = shift;
+    my $code = shift;
+    $class->_apply_to_matches(\&apply, $code, @_);
 };
 
 method grep_matches => sub {
+    my $class = shift;
     # XXX: can you use grep like this?
-    _apply_to_matches(\&grep, sub { $_->match(@_) }, @_);
+    $class->_apply_to_matches(\&grep, sub { $_->match(@_) }, @_);
 };
 
 method any_match => sub {
-    _apply_to_matches(\&any, sub { $_->match(@_) }, @_);
+    my $class = shift;
+    $class->_apply_to_matches(\&any, sub { $_->match(@_) }, @_);
 };
 
 method _match => sub {
