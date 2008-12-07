@@ -154,6 +154,43 @@ method _match => sub {
 
 =method match
 
+This method provides the majority of the functionality of this role. It accepts
+a hash of arguments, with keys being the methods (usually attributes) of the
+object to be tested, and values being things to test against them. Possible
+types of values are:
+
+=over
+
+=item SCALAR
+
+Returns true if the result of the method is equal to (C<eq>) the value of the
+scalar, otherwise returns false.
+
+=item REGEXP
+
+Returns true if the result of the method matches the regexp, otherwise returns
+false.
+
+=item CODEREF
+
+Calls the coderef with $_ set to the result of the method, returning true if
+the coderef returns true, and false otherwise.
+
+=item UNDEF
+
+Returns true if the method returns undef, or if the object doesn't have a
+method by this name, otherwise returns false.
+
+=item ARRAYREF
+
+Matches the result of the method against each element in the arrayref as
+described above, returning true if any of the submatches return true, and false
+otherwise.
+
+=back
+
+Method names can also be given with a leading '!', which inverts that test. The first key can be omitted from the argument list if it is the method name passed to the default_match parameter when composing this role.
+
 =cut
 
 method match => sub {
