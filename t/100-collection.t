@@ -1,7 +1,8 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More tests => 4;
+use Test::Deep;
 
 package Foo;
 use Moose;
@@ -32,6 +33,16 @@ sub first_match {
     Foo->first_match($self->foos, @_);
 }
 
+sub any_match {
+    my $self = shift;
+    Foo->any_match($self->foos, @_);
+}
+
+sub grep_matches {
+    my $self = shift;
+    Foo->grep_matches($self->foos, @_);
+}
+
 package main;
 my $foos = FooCollection->new;
 my $foo1 = Foo->new(a => 'foo',  b => 'bar', c => 'baz');
@@ -42,3 +53,11 @@ push @{ $foos->foos }, $foo2;
 push @{ $foos->foos }, $foo3;
 is($foos->first_match(a => ''), $foo2,
    'first_match works');
+is($foos->any_match('!b' => qr/z/), (),
+   'any_match works');
+is_deeply([shallow($foo2), shallow($foo3)], set($foos->grep_matches(c => qr/o/)),
+          'grep_matches works');
+my @each;
+$foos->each_match(sub { push @each, $_ }, b => qr/a/);
+is_deeply([shallow($foo1), shallow($foo3)], set(@each),
+          'each_match works');
