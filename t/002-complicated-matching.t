@@ -21,5 +21,5 @@ ok($foo->match(a => [qr/b/, sub { length(shift) == 3 }]),
    'arrayref matching works');
 ok(!$foo->match(a => [qr/b/, sub { length(shift) == 4 }]),
    'arrayref matching works');
-ok($foo->match(not_a => 'bar', b => 'bar', not_c => 'bar'),
+ok($foo->match('!a' => 'bar', b => 'bar', '!c' => 'bar'),
    'negated matching works');

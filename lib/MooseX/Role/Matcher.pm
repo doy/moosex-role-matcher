@@ -68,7 +68,7 @@ method match => sub {
     # All the conditions must be true for true to be returned. Return
     # immediately if a false condition is found.
     for my $matcher (keys %args) {
-        my ($invert, $name) = $matcher =~ /^(not_)?(.*)$/;
+        my ($invert, $name) = $matcher =~ /^(!)?(.*)$/;
         my $value = $self->can($name) ? $self->$name : undef;
         my $seek = $args{$matcher};
 
