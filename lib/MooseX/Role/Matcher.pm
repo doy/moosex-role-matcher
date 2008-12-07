@@ -17,12 +17,9 @@ use List::MoreUtils qw/any all/;
   has phone => (isa => 'Str');
 
   package main;
-  my @people = map { Person->new(name  => $_->[0],
-                                 age   => $_->[1],
-                                 phone => $_->[2] }
-                   ['James', 22, '555-1914'],
-                   ['Jesse', 22, '555-6287'],
-                   ['Eric',  21, '555-7634'];
+  my @people = (Person->new(name => 'James', age => 22, phone => '555-1914'),
+                Person->new(name => 'Jesse', age => 22, phone => '555-6287'),
+                Person->new(name => 'Eric',  age => 21, phone => '555-7634'));
   # is James 22?
   $people[0]->match(age => 22);
   # which people are not 22?
