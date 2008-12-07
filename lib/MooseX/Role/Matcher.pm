@@ -80,6 +80,8 @@ method _apply_to_matches => sub {
 
 =method first_match
 
+  my $four = Person->first_match([@people], sub { length == 4 });
+
 Class method which takes an arrayref of objects in the class that consumed this
 role, and calls C<match> on each object in the arrayref, passing it the
 remaining arguments, and returns the first object for which match returns true.
@@ -92,6 +94,8 @@ method first_match => sub {
 };
 
 =method grep_matches
+
+  my @not_twenty_two = Person->grep_matches([@people], '!age' => 22);
 
 Class method which takes an arrayref of objects in the class that consumed this
 role, and calls C<match> on each object in the arrayref, passing it the
@@ -107,6 +111,8 @@ method grep_matches => sub {
 
 =method any_match
 
+  Person->any_match([@people], age => 22, number => qr/4$/);
+
 Class method which takes an arrayref of objects in the class that consumed this
 role, and calls C<match> on each object in the arrayref, passing it the
 remaining arguments, and returns true if any C<match> calls return true,
@@ -120,6 +126,8 @@ method any_match => sub {
 };
 
 =method all_match
+
+  Person->all_match([@people], name => [qr/^J/, qr/^E/]);
 
 Class method which takes an arrayref of objects in the class that consumed this
 role, and calls C<match> on each object in the arrayref, passing it the
@@ -154,6 +162,8 @@ method _match => sub {
 };
 
 =method match
+
+  $person->match(age => 22);
 
 This method provides the majority of the functionality of this role. It accepts
 a hash of arguments, with keys being the methods (usually attributes) of the
