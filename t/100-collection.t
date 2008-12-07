@@ -23,11 +23,6 @@ has foos => (
     default => sub { [] },
 );
 
-sub each_match {
-    my $self = shift;
-    Foo->each_match($self->foos, @_);
-}
-
 sub first_match {
     my $self = shift;
     Foo->first_match($self->foos, @_);
