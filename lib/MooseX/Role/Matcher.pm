@@ -187,7 +187,13 @@ no MooseX::Role::Parameterized;
 
 =head1 TODO
 
+Better error handling/reporting
+
 =head1 SEE ALSO
+
+L<Moose>
+
+L<MooseX::Role::Parameterized>
 
 =head1 BUGS
 
