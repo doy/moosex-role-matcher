@@ -35,8 +35,8 @@ method each_match => sub {
 
 method grep_matches => sub {
     my $class = shift;
-    # XXX: can you use grep like this?
-    $class->_apply_to_matches(\&grep, sub { $_->match(@_) }, @_);
+    my $grep = sub { my $code = shift; grep { $code->($_) } @_ };
+    $class->_apply_to_matches($grep, sub { $_->match(@_) }, @_);
 };
 
 method any_match => sub {
