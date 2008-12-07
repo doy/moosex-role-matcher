@@ -12,22 +12,27 @@ use List::MoreUtils qw/any all/;
   use Moose;
   with 'MooseX::Role::Matcher' => { default_match => 'name' };
 
-  has name  => (isa => 'Str');
-  has age   => (isa => 'Num');
-  has phone => (isa => 'Str');
+  has name  => (is => 'ro', isa => 'Str');
+  has age   => (is => 'ro', isa => 'Num');
+  has phone => (is => 'ro', isa => 'Str');
 
   package main;
   my @people = (Person->new(name => 'James', age => 22, phone => '555-1914'),
                 Person->new(name => 'Jesse', age => 22, phone => '555-6287'),
                 Person->new(name => 'Eric',  age => 21, phone => '555-7634'));
+
   # is James 22?
   $people[0]->match(age => 22);
+
   # which people are not 22?
   my @not_twenty_two = Person->grep_matches([@people], '!age' => 22);
+
   # do any of the 22-year-olds have a phone number ending in 4?
   Person->any_match([@people], age => 22, number => qr/4$/);
+
   # does everyone's name start with either J or E?
   Person->all_match([@people], name => [qr/^J/, qr/^E/]);
+
   # find the first person whose name is 4 characters long (using the default)
   my $four = Person->first_match([@people], sub { length == 4 });
 
