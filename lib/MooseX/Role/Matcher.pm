@@ -15,43 +15,27 @@ my $default = $p->default_match;
 
 method _apply_to_matches => sub {
     my $on_match = shift;
-    my $code = shift;
     my $matcher = shift;
-
-    # pass in a coderef? return the first for which the coderef is true
-    if (ref($matcher) eq 'CODE') {
-        return $on_match->(sub { $code->($_) }, (grep { $matcher->($_) } @_));
-    }
-
-    # pass in a regex? return the first item for which the regex matches ID
-    if (ref($matcher) eq 'Regexp') {
-        return $on_match->(sub { $code->($_) }, (grep { $_->match($default => $matcher) } @_));
-    }
-
-    my $value = shift;
-    if (!defined($value)) {
-        # they passed in only one argument. assume they are checking identity
-        ($matcher, $value) = ($default, $matcher);
-    }
-
-    return $on_match->(sub { $code->($_) }, (grep { $_->match($matcher => $value) } @_));
+    my @list = @{ shift };
+    unshift @_, $default if (@_ % 2 == 1);
+    $on_match->(sub { $matcher->(@_) }, @list);
 };
 
 method first_match => sub {
-    _apply_to_matches(\&first, @_);
+    _apply_to_matches(\&first, sub { $_->match(@_) }, @_);
 };
 
 method each_match => sub {
-    _apply_to_matches(\&apply, @_);
+    _apply_to_matches(\&apply, shift, @_);
 };
 
 method grep_matches => sub {
     # XXX: can you use grep like this?
-    _apply_to_matches(\&grep, @_);
+    _apply_to_matches(\&grep, sub { $_->match(@_) }, @_);
 };
 
 method any_match => sub {
-    _apply_to_matches(\&any, @_);
+    _apply_to_matches(\&any, sub { $_->match(@_) }, @_);
 };
 
 method _match => sub {
