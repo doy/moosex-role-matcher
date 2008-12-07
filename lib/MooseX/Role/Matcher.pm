@@ -4,6 +4,20 @@ use MooseX::Role::Parameterized;
 use List::Util qw/first/;
 use List::MoreUtils qw/any all/;
 
+# ABSTRACT: generic object matching based on attributes and methods
+
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+=cut
+
+=head1 PARAMETERS
+
+=head2 default_match
+
+=cut
+
 parameter default_match => (
     is  => 'ro',
     isa => 'Str',
@@ -22,10 +36,18 @@ method _apply_to_matches => sub {
     $on_match->(sub { $_->match(@matchers) }, @list);
 };
 
+=method first_match
+
+=cut
+
 method first_match => sub {
     my $class = shift;
     $class->_apply_to_matches(\&first, @_);
 };
+
+=method grep_matches
+
+=cut
 
 method grep_matches => sub {
     my $class = shift;
@@ -33,10 +55,18 @@ method grep_matches => sub {
     $class->_apply_to_matches($grep, @_);
 };
 
+=method any_match
+
+=cut
+
 method any_match => sub {
     my $class = shift;
     $class->_apply_to_matches(\&any, @_);
 };
+
+=method all_match
+
+=cut
 
 method all_match => sub {
     my $class = shift;
@@ -59,6 +89,10 @@ method _match => sub {
     }
     return $value eq $seek;
 };
+
+=method match
+
+=cut
 
 method match => sub {
     my $self = shift;
@@ -87,5 +121,47 @@ method match => sub {
 };
 
 no MooseX::Role::Parameterized;
+
+=head1 TODO
+
+=head1 SEE ALSO
+
+=head1 BUGS
+
+No known bugs.
+
+Please report any bugs through RT: email
+C<bug-moosex-role-matcher at rt.cpan.org>, or browse to
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=MooseX-Role-Matcher>.
+
+=head1 SUPPORT
+
+You can find this documentation for this module with the perldoc command.
+
+    perldoc MooseX::Role::Matcher
+
+You can also look for information at:
+
+=over 4
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/MooseX-Role-Matcher>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/MooseX-Role-Matcher>
+
+=item * RT: CPAN's request tracker
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=MooseX-Role-Matcher>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/MooseX-Role-Matcher>
+
+=back
+
+=cut
 
 1;
