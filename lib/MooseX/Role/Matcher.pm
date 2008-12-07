@@ -16,15 +16,14 @@ my $default = $p->default_match;
 method _apply_to_matches => sub {
     my $class = shift;
     my $on_match = shift;
-    my $matcher = shift;
     my @list = @{ shift() };
     unshift @_, $default if (@_ % 2 == 1);
-    $on_match->(sub { $matcher->(@_) }, @list);
+    $on_match->(sub { $_->match(@_) }, @list);
 };
 
 method first_match => sub {
     my $class = shift;
-    $class->_apply_to_matches(\&first, sub { $_->match(@_) }, @_);
+    $class->_apply_to_matches(\&first, @_);
 };
 
 method each_match => sub {
@@ -36,12 +35,12 @@ method each_match => sub {
 method grep_matches => sub {
     my $class = shift;
     my $grep = sub { my $code = shift; grep { $code->($_) } @_ };
-    $class->_apply_to_matches($grep, sub { $_->match(@_) }, @_);
+    $class->_apply_to_matches($grep, @_);
 };
 
 method any_match => sub {
     my $class = shift;
-    $class->_apply_to_matches(\&any, sub { $_->match(@_) }, @_);
+    $class->_apply_to_matches(\&any, @_);
 };
 
 method _match => sub {
