@@ -16,7 +16,7 @@ my $default = $p->default_match;
 method _apply_to_matches => sub {
     my $on_match = shift;
     my $matcher = shift;
-    my @list = @{ shift };
+    my @list = @{ shift() };
     unshift @_, $default if (@_ % 2 == 1);
     $on_match->(sub { $matcher->(@_) }, @list);
 };
