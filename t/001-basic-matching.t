@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 5;
+use Test::More tests => 8;
 
 package Foo;
 use Moose;
@@ -25,3 +25,9 @@ ok($foo->match(a => 'foo', b => qr/a/, c => sub { substr(shift, 2) eq 'z' }),
 $foo = Foo->new(a => 'foo');
 ok($foo->match(a => 'foo', b => undef),
    'matching against undef works');
+ok($foo->match(a => 'foo', d => undef),
+   'matching against undef works even when the method doesn\'t exist');
+ok(!$foo->match(a => undef),
+   'matching undef against a method with a value fails');
+ok(!$foo->match(b => 'foo'),
+   'matching against a method with an undef value fails');

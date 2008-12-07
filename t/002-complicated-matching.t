@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 package Foo;
 use Moose;
@@ -22,4 +22,6 @@ ok($foo->match(a => [qr/b/, sub { length(shift) == 3 }]),
 ok(!$foo->match(a => [qr/b/, sub { length(shift) == 4 }]),
    'arrayref matching works');
 ok($foo->match('!a' => 'bar', b => 'bar', '!c' => 'bar'),
+   'negated matching works');
+ok(!$foo->match(a => 'foo', '!b' => 'bar'),
    'negated matching works');
