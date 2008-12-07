@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 4;
+use Test::More tests => 3;
 use Test::Deep;
 
 package Foo;
@@ -57,7 +57,3 @@ ok(!$foos->any_match(b => qr/z/),
    'any_match works');
 is_deeply([shallow($foo2), shallow($foo3)], set($foos->grep_matches(c => qr/o/)),
           'grep_matches works');
-my @each;
-$foos->each_match(sub { push @each, $_ }, b => qr/a/);
-is_deeply([shallow($foo1), shallow($foo3)], set(@each),
-          'each_match works');

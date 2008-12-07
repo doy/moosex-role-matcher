@@ -2,7 +2,7 @@
 package MooseX::Role::Matcher;
 use MooseX::Role::Parameterized;
 use List::Util qw/first/;
-use List::MoreUtils qw/any apply/;
+use List::MoreUtils qw/any/;
 
 parameter default_match => (
     is  => 'ro',
@@ -25,12 +25,6 @@ method _apply_to_matches => sub {
 method first_match => sub {
     my $class = shift;
     $class->_apply_to_matches(\&first, @_);
-};
-
-method each_match => sub {
-    my $class = shift;
-    my $code = shift;
-    $class->_apply_to_matches(\&apply, $code, @_);
 };
 
 method grep_matches => sub {
