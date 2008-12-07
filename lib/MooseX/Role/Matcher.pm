@@ -38,11 +38,25 @@ use List::MoreUtils qw/any all/;
 
 =head1 DESCRIPTION
 
-=cut
+This role adds flexible matching and searching capabilities to your Moose
+class. It provides a match method, which tests attributes and methods of your
+object against strings, regexes, or coderefs, and also provides several class
+methods for using match on lists of objects.
 
-=head1 PARAMETERS
+=head2 PARAMETERS
 
-=head2 default_match
+MooseX::Role::Matcher is a parameterized role (see
+L<MooseX::Role::Parameterized>). The parameters it takes are:
+
+=over
+
+=item default_match
+
+Which attribute/method to test against by default, if none are specified
+explicitly. Setting default_match to 'foo' allows using $obj->match('bar')
+rather than $obj->match(foo => 'bar').
+
+=back
 
 =cut
 
