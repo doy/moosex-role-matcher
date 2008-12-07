@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::More tests => 4;
 use Test::Deep;
 
 package Foo;
@@ -33,6 +33,11 @@ sub any_match {
     Foo->any_match($self->foos, @_);
 }
 
+sub all_match {
+    my $self = shift;
+    Foo->all_match($self->foos, @_);
+}
+
 sub grep_matches {
     my $self = shift;
     Foo->grep_matches($self->foos, @_);
@@ -50,5 +55,7 @@ is($foos->first_match(a => ''), $foo2,
    'first_match works');
 ok(!$foos->any_match(b => qr/z/),
    'any_match works');
+ok($foos->all_match(c => qr/[^bf]/),
+   'all_match works');
 cmp_deeply([$foos->grep_matches(c => qr/o/)], set(shallow($foo2), shallow($foo3)),
           'grep_matches works');
