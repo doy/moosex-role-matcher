@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More tests => 2;
 use Test::Deep;
 
 package Foo;
@@ -52,4 +52,6 @@ push @{ $foos->foos }, $foo1;
 push @{ $foos->foos }, $foo2;
 push @{ $foos->foos }, $foo3;
 is($foos->first_match(sub { length() < 3 }), $foo2,
-   'default parameter is passed correctly');
+   'default parameter is passed correctly to first_match');
+ok($foo1->match('foo'),
+   'default parameter is passed correctly to match');

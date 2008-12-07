@@ -74,7 +74,6 @@ method _apply_to_matches => sub {
     my $on_match = shift;
     my @list = @{ shift() };
     my @matchers = @_;
-    unshift @matchers, $default if (@_ % 2 == 1);
     $on_match->(sub { $_->match(@matchers) }, @list);
 };
 
@@ -159,6 +158,7 @@ method _match => sub {
 
 method match => sub {
     my $self = shift;
+    unshift @_, $default if @_ % 2 == 1;
     my %args = @_;
 
     # All the conditions must be true for true to be returned. Return
