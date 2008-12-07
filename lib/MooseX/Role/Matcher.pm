@@ -5,6 +5,13 @@ use List::Util qw/first/;
 use List::MoreUtils qw/any all/;
 
 # ABSTRACT: generic object matching based on attributes and methods
+=head1 NAME
+
+MooseX::Role::Matcher - generic object matching based on attributes and methods
+
+=head1 VERSION
+
+version 0.01
 
 =head1 SYNOPSIS
 
@@ -46,7 +53,7 @@ class. It provides a match method, which tests attributes and methods of your
 object against strings, regexes, or coderefs, and also provides several class
 methods for using match on lists of objects.
 
-=head2 PARAMETERS
+=head1 PARAMETERS
 
 MooseX::Role::Matcher is a parameterized role (see
 L<MooseX::Role::Parameterized>). The parameters it takes are:
@@ -80,7 +87,9 @@ method _apply_to_matches => sub {
     $on_match->(sub { $_->match(@matchers) }, @list);
 };
 
-=method first_match
+=head1 METHODS
+
+=head2 first_match
 
   my $four = Person->first_match([@people], sub { length == 4 });
 
@@ -95,7 +104,7 @@ method first_match => sub {
     $class->_apply_to_matches(\&first, @_);
 };
 
-=method grep_matches
+=head2 grep_matches
 
   my @not_twenty_two = Person->grep_matches([@people], '!age' => 22);
 
@@ -111,7 +120,7 @@ method grep_matches => sub {
     $class->_apply_to_matches($grep, @_);
 };
 
-=method any_match
+=head2 any_match
 
   Person->any_match([@people], age => 22, number => qr/4$/);
 
@@ -127,7 +136,7 @@ method any_match => sub {
     $class->_apply_to_matches(\&any, @_);
 };
 
-=method all_match
+=head2 all_match
 
   Person->all_match([@people], name => [qr/^J/, qr/^E/]);
 
@@ -163,7 +172,7 @@ method _match => sub {
     return $value eq $seek;
 };
 
-=method match
+=head2 match
 
   $person->match(age => 22);
 
@@ -234,6 +243,17 @@ method match => sub {
 };
 
 no MooseX::Role::Parameterized;
+
+=head1 AUTHOR
+
+  Jesse Luehrs <doy at tozt dot net>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2008 by Jesse Luehrs.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as perl itself.
 
 =head1 TODO
 
