@@ -51,5 +51,5 @@ my $foo3 = Foo->new(a => 'blah', b => 'abc', c => 'foo');
 push @{ $foos->foos }, $foo1;
 push @{ $foos->foos }, $foo2;
 push @{ $foos->foos }, $foo3;
-is($foos->first_match(sub { length(shift) < 3 }), $foo2,
+is($foos->first_match(sub { length() < 3 }), $foo2,
    'default parameter is passed correctly');

@@ -22,5 +22,5 @@ package main;
 my $foo = Foo->new(a => 'foo', b => 'bar', c => 'baz');
 ok($foo->match(concat => 'foobarbaz'),
    'match handles methods as well as attributes');
-ok($foo->match(a => qr/o/, concat => sub { length(shift) > 6 }),
+ok($foo->match(a => qr/o/, concat => sub { length > 6 }),
    'match handles methods as well as attributes');

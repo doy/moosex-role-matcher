@@ -18,9 +18,9 @@ ok($foo->match(a => 'foo', b => 'bar', c => 'baz'),
    'string matching works');
 ok($foo->match(a => qr/o/),
    'regex matching works');
-ok($foo->match(b => sub { length(shift) == 3 }),
+ok($foo->match(b => sub { length == 3 }),
    'subroutine matching works');
-ok($foo->match(a => 'foo', b => qr/a/, c => sub { substr(shift, 2) eq 'z' }),
+ok($foo->match(a => 'foo', b => qr/a/, c => sub { substr($_, 2) eq 'z' }),
    'combined matching works');
 $foo = Foo->new(a => 'foo');
 ok($foo->match(a => 'foo', b => undef),

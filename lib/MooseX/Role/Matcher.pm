@@ -29,7 +29,7 @@ use List::MoreUtils qw/any all/;
   # does everyone's name start with either J or E?
   Person->all_match([@people], name => [qr/^J/, qr/^E/]);
   # find the first person whose name is 4 characters long (using the default)
-  my $four = Person->first_match([@people], sub { length(shift) == 4 });
+  my $four = Person->first_match([@people], sub { length == 4 });
 
 =head1 DESCRIPTION
 
@@ -104,7 +104,10 @@ method _match => sub {
     return !defined $value if !defined $seek;
     return 0 if !defined $value;
     return $value =~ $seek if ref($seek) eq 'Regexp';
-    return $seek->($value) if ref($seek) eq 'CODE';
+    if (ref($seek) eq 'CODE') {
+        local $_ = $value;
+        return $seek->();
+    }
     if (ref($seek) eq 'ARRAY') {
         for (@$seek) {
             return 1 if $self->_match($value => $_);

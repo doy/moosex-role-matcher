@@ -15,11 +15,11 @@ has [qw/a b c/] => (
 
 package main;
 my $foo = Foo->new(a => 'foo', b => 'bar', c => 'baz');
-ok($foo->match(a => [qr/o/, sub { length(shift) == 4 }]),
+ok($foo->match(a => [qr/o/, sub { length == 4 }]),
    'arrayref matching works');
-ok($foo->match(a => [qr/b/, sub { length(shift) == 3 }]),
+ok($foo->match(a => [qr/b/, sub { length == 3 }]),
    'arrayref matching works');
-ok(!$foo->match(a => [qr/b/, sub { length(shift) == 4 }]),
+ok(!$foo->match(a => [qr/b/, sub { length == 4 }]),
    'arrayref matching works');
 ok($foo->match('!a' => 'bar', b => 'bar', '!c' => 'bar'),
    'negated matching works');
