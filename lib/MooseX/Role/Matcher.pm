@@ -33,7 +33,8 @@ use List::MoreUtils qw/any all/;
   # does everyone's name start with either J or E?
   Person->all_match([@people], name => [qr/^J/, qr/^E/]);
 
-  # find the first person whose name is 4 characters long (using the default)
+  # find the first person whose name is 4 characters long (using the
+  # default_match of name)
   my $four = Person->first_match([@people], sub { length == 4 });
 
 =head1 DESCRIPTION
@@ -53,8 +54,8 @@ L<MooseX::Role::Parameterized>). The parameters it takes are:
 =item default_match
 
 Which attribute/method to test against by default, if none are specified
-explicitly. Setting default_match to 'foo' allows using $obj->match('bar')
-rather than $obj->match(foo => 'bar').
+explicitly. Setting default_match to 'foo' allows using
+C<< $obj->match('bar') >> rather than C<< $obj->match(foo => 'bar') >>.
 
 =back
 
@@ -173,7 +174,7 @@ false.
 
 =item CODEREF
 
-Calls the coderef with $_ set to the result of the method, returning true if
+Calls the coderef with C<$_> set to the result of the method, returning true if
 the coderef returns true, and false otherwise.
 
 =item UNDEF
