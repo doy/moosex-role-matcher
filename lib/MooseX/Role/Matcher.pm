@@ -80,6 +80,10 @@ method _apply_to_matches => sub {
 
 =method first_match
 
+Class method which takes an arrayref of objects in the class that consumed this
+role, and calls C<match> on each object in the arrayref, passing it the
+remaining arguments, and returns the first object for which match returns true.
+
 =cut
 
 method first_match => sub {
@@ -88,6 +92,10 @@ method first_match => sub {
 };
 
 =method grep_matches
+
+Class method which takes an arrayref of objects in the class that consumed this
+role, and calls C<match> on each object in the arrayref, passing it the
+remaining arguments, and returns the each object for which match returns true.
 
 =cut
 
@@ -99,6 +107,11 @@ method grep_matches => sub {
 
 =method any_match
 
+Class method which takes an arrayref of objects in the class that consumed this
+role, and calls C<match> on each object in the arrayref, passing it the
+remaining arguments, and returns true if any C<match> calls return true,
+otherwise returns false.
+
 =cut
 
 method any_match => sub {
@@ -107,6 +120,11 @@ method any_match => sub {
 };
 
 =method all_match
+
+Class method which takes an arrayref of objects in the class that consumed this
+role, and calls C<match> on each object in the arrayref, passing it the
+remaining arguments, and returns false if any C<match> calls return false,
+otherwise returns true.
 
 =cut
 
