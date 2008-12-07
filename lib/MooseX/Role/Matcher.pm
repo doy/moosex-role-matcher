@@ -8,6 +8,32 @@ use List::MoreUtils qw/any all/;
 
 =head1 SYNOPSIS
 
+  package Person;
+  use Moose;
+  with 'MooseX::Role::Matcher' => { default_match => 'name' };
+
+  has name  => (isa => 'Str');
+  has age   => (isa => 'Num');
+  has phone => (isa => 'Str');
+
+  package main;
+  my @people = map { Person->new(name  => $_->[0],
+                                 age   => $_->[1],
+                                 phone => $_->[2] }
+                   ['James', 22, '555-1914'],
+                   ['Jesse', 22, '555-6287'],
+                   ['Eric',  21, '555-7634'];
+  # is James 22?
+  $people[0]->match(age => 22);
+  # which people are not 22?
+  my @not_twenty_two = Person->grep_matches([@people], '!age' => 22);
+  # do any of the 22-year-olds have a phone number ending in 4?
+  Person->any_match([@people], age => 22, number => qr/4$/);
+  # does everyone's name start with either J or E?
+  Person->all_match([@people], name => [qr/^J/, qr/^E/]);
+  # find the first person whose name is 4 characters long (using the default)
+  my $four = Person->first_match([@people], sub { length(shift) == 4 });
+
 =head1 DESCRIPTION
 
 =cut
