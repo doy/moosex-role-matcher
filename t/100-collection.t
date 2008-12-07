@@ -55,5 +55,5 @@ is($foos->first_match(a => ''), $foo2,
    'first_match works');
 ok(!$foos->any_match(b => qr/z/),
    'any_match works');
-is_deeply([shallow($foo2), shallow($foo3)], set($foos->grep_matches(c => qr/o/)),
+cmp_deeply([$foos->grep_matches(c => qr/o/)], set(shallow($foo2), shallow($foo3)),
           'grep_matches works');
