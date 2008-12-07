@@ -17,9 +17,11 @@ use List::MoreUtils qw/any all/;
   has phone => (is => 'ro', isa => 'Str');
 
   package main;
-  my @people = (Person->new(name => 'James', age => 22, phone => '555-1914'),
-                Person->new(name => 'Jesse', age => 22, phone => '555-6287'),
-                Person->new(name => 'Eric',  age => 21, phone => '555-7634'));
+  my @people = (
+      Person->new(name => 'James', age => 22, phone => '555-1914'),
+      Person->new(name => 'Jesse', age => 22, phone => '555-6287'),
+      Person->new(name => 'Eric',  age => 21, phone => '555-7634'),
+  );
 
   # is James 22?
   $people[0]->match(age => 22);
