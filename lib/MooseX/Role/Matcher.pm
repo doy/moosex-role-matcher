@@ -17,8 +17,9 @@ method _apply_to_matches => sub {
     my $class = shift;
     my $on_match = shift;
     my @list = @{ shift() };
-    unshift @_, $default if (@_ % 2 == 1);
-    $on_match->(sub { $_->match(@_) }, @list);
+    my @matchers = @_;
+    unshift @matchers, $default if (@_ % 2 == 1);
+    $on_match->(sub { $_->match(@matchers) }, @list);
 };
 
 method first_match => sub {
@@ -34,7 +35,7 @@ method each_match => sub {
 
 method grep_matches => sub {
     my $class = shift;
-    my $grep = sub { my $code = shift; grep { $code->($_) } @_ };
+    my $grep = sub { my $code = shift; grep { $code->() } @_ };
     $class->_apply_to_matches($grep, @_);
 };
 
