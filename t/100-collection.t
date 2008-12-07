@@ -53,7 +53,7 @@ push @{ $foos->foos }, $foo2;
 push @{ $foos->foos }, $foo3;
 is($foos->first_match(a => ''), $foo2,
    'first_match works');
-is($foos->any_match('!b' => qr/z/), (),
+ok(!$foos->any_match(b => qr/z/),
    'any_match works');
 is_deeply([shallow($foo2), shallow($foo3)], set($foos->grep_matches(c => qr/o/)),
           'grep_matches works');
