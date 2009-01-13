@@ -1,0 +1,7 @@
+Revision history for MooseX::Role::Matcher
+
+0.02    01/12/2009
+    Allow matching against hashref values
+
+0.01    12/06/2008
+    Initial release
