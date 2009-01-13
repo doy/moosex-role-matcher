@@ -168,6 +168,7 @@ method _match => sub {
         for (@$seek) {
             return 1 if $self->_match($value => $_);
         }
+        return 0;
     }
     if (ref($seek) eq 'HASH') {
         return 0 unless blessed($value) &&
