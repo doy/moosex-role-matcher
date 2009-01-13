@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 6;
+use Test::More tests => 9;
 
 package Bar;
 use Moose;
@@ -52,6 +52,10 @@ package main;
                        a => 1,
                    }),
        'simple submatching works');
+    ok(!$foo->match(bar => {
+                        b => 1,
+                    }),
+       'simple submatching works');
     ok($foo->match(bar => {
                        b    => 2,
                        '!c' => sub { $_ > 5 },
@@ -86,6 +90,18 @@ package main;
                        },
                    }),
        'deeper submatching works');
+    ok(!$foo->match(a   => 3.14,
+                    bar => {
+                        a => 4,
+                    },
+                    baz => {
+                        d => sub { length == 4 },
+                        a => {
+                            b => 5,
+                            c => qr/\d/,
+                        },
+                    }),
+       'deeper submatching works');
 }
 {
     my $bar = Bar->new(a => 7, b => 'tmp', c => 9);
@@ -105,6 +121,18 @@ package main;
                            },
                        },
                    }),
+       'cyclical submatching works');
+    ok(!$foo->match(baz => {
+                        c => {
+                            c => {
+                                e => {
+                                    c => {
+                                        b => 'quuux',
+                                    },
+                                },
+                            },
+                        },
+                    }),
        'cyclical submatching works');
     ok($foo->match('!b' => sub { $_ % 2 },
                    bar  => {
