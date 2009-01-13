@@ -215,6 +215,12 @@ Matches the result of the method against each element in the arrayref as
 described above, returning true if any of the submatches return true, and false
 otherwise.
 
+=item HASHREF
+
+If the method does not return an object which does MooseX::Role::Matcher,
+returns false. Otherwise, returns the result of calling C<match> on the
+returned object, with the contents of the hashref as arguments.
+
 =back
 
 Method names can also be given with a leading '!', which inverts that test. The first key can be omitted from the argument list if it is the method name passed to the default_match parameter when composing this role.
