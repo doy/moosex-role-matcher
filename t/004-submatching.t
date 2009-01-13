@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 9;
+use Test::More tests => 11;
 
 package Bar;
 use Moose;
@@ -20,6 +20,9 @@ has [qw/a b c/] => (
     is       => 'rw',
     required => 1,
 );
+
+package Quux;
+use Moose;
 
 package Foo;
 use Moose;
@@ -74,8 +77,9 @@ package main;
        'simple submatching works');
 }
 {
+    my $quux = Quux->new;
     my $bar = Bar->new(a => 4, b => 5, c => 6);
-    my $baz = Baz->new(a => $bar, b => 'quux', c => 'cribbage');
+    my $baz = Baz->new(a => $bar, b => $quux, c => 'cribbage');
     my $foo = Foo->new(a => 3.14, b => 2.72, c => 1.61,
                        bar => $bar, baz => $baz);
     ok($foo->match(a   => 3.14,
@@ -83,7 +87,7 @@ package main;
                        a => 4,
                    },
                    baz => {
-                       b => sub { length == 4 },
+                       c => sub { length == 8 },
                        a => {
                            b => 5,
                            c => qr/\d/,
@@ -101,6 +105,18 @@ package main;
                             c => qr/\d/,
                         },
                     }),
+       'deeper submatching works');
+    ok($foo->match(baz => {
+                       '!b' => {
+                           c => 1,
+                       },
+                   }),
+       'deeper submatching works');
+    ok($foo->match(baz => {
+                       '!c' => {
+                           b => 1,
+                       },
+                   }),
        'deeper submatching works');
 }
 {
