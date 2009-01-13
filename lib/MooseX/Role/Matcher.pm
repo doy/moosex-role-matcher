@@ -169,6 +169,11 @@ method _match => sub {
             return 1 if $self->_match($value => $_);
         }
     }
+    if (ref($seek) eq 'HASH') {
+        return 0 unless blessed($value) &&
+                        $value->does('MooseX::Role::Matcher');
+        return $value->match(%$seek);
+    }
     return $value eq $seek;
 };
 
