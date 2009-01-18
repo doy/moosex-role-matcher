@@ -71,7 +71,6 @@ C<< $obj->match('bar') >> rather than C<< $obj->match(foo => 'bar') >>.
 =cut
 
 parameter default_match => (
-    is  => 'ro',
     isa => 'Str',
 );
 
