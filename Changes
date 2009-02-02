@@ -1,5 +1,8 @@
 Revision history for MooseX::Role::Matcher
 
+0.03    02/01/2009
+    Fix matching undef against arrayref and coderefs
+
 0.02    01/12/2009
     Allow matching against hashref values
 
