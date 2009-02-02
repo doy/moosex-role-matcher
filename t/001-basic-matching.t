@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 8;
+use Test::More tests => 9;
 
 package Foo;
 use Moose;
@@ -23,6 +23,8 @@ ok($foo->match(b => sub { length == 3 }),
 ok($foo->match(a => 'foo', b => qr/a/, c => sub { substr($_, 2) eq 'z' }),
    'combined matching works');
 $foo = Foo->new(a => 'foo');
+ok($foo->match(b => sub { !$_ }),
+   'subroutine matching against undef works');
 ok($foo->match(a => 'foo', b => undef),
    'matching against undef works');
 ok($foo->match(a => 'foo', d => undef),
