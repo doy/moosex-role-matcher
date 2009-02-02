@@ -99,7 +99,7 @@ package main;
                         a => 4,
                     },
                     baz => {
-                        d => sub { length == 4 },
+                        d => sub { defined && length == 4 },
                         a => {
                             b => 5,
                             c => qr/\d/,
