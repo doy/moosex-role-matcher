@@ -4,14 +4,9 @@ use MooseX::Role::Parameterized;
 use List::Util qw/first/;
 use List::MoreUtils qw/any all/;
 
-# ABSTRACT: generic object matching based on attributes and methods
 =head1 NAME
 
 MooseX::Role::Matcher - generic object matching based on attributes and methods
-
-=head1 VERSION
-
-version 0.04
 
 =head1 SYNOPSIS
 
