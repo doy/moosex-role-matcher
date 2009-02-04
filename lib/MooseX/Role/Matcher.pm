@@ -74,9 +74,14 @@ parameter default_match => (
     isa => 'Str',
 );
 
+parameter allow_missing_methods => (
+    isa => 'Bool',
+);
+
 role {
 my $p = shift;
 my $default = $p->default_match;
+my $allow_missing_methods = $p->allow_missing_methods;
 
 method _apply_to_matches => sub {
     my $class = shift;
@@ -244,6 +249,8 @@ method match => sub {
     # immediately if a false condition is found.
     for my $matcher (keys %args) {
         my ($invert, $name) = $matcher =~ /^(!)?(.*)$/;
+        confess blessed($self) . " has no method named $name"
+            unless $self->can($name) || $allow_missing_methods;
         my $value = $self->can($name) ? $self->$name : undef;
         my $seek = $args{$matcher};
 
