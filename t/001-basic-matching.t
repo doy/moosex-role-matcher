@@ -5,7 +5,7 @@ use Test::More tests => 9;
 
 package Foo;
 use Moose;
-with 'MooseX::Role::Matcher';
+with 'MooseX::Role::Matcher' => { allow_missing_methods => 1 };
 
 has [qw/a b c/] => (
     is       => 'ro',
