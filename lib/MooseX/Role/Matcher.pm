@@ -32,7 +32,7 @@ MooseX::Role::Matcher - generic object matching based on attributes and methods
   my @not_twenty_two = Person->grep_matches([@people], '!age' => 22);
 
   # do any of the 22-year-olds have a phone number ending in 4?
-  Person->any_match([@people], age => 22, number => qr/4$/);
+  Person->any_match([@people], age => 22, phone => qr/4$/);
 
   # does everyone's name start with either J or E?
   Person->all_match([@people], name => [qr/^J/, qr/^E/]);
