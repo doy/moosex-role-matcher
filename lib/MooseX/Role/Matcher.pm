@@ -276,7 +276,7 @@ no MooseX::Role::Parameterized;
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2008 by Jesse Luehrs.
+This software is copyright (c) 2008-2009 by Jesse Luehrs.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as perl itself.
