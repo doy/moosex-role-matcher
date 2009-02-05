@@ -1,5 +1,8 @@
 Revision history for MooseX::Role::Matcher
 
+0.05    02/04/2009
+    Fix a couple doc and test bugs
+
 0.04    02/04/2009
     Matching against non-existent methods now dies, unless
     allow_missing_methods => 1 is passed as a role parameter
