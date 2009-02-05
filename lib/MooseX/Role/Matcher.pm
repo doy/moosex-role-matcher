@@ -61,6 +61,10 @@ Which attribute/method to test against by default, if none are specified
 explicitly. Setting default_match to 'foo' allows using
 C<< $obj->match('bar') >> rather than C<< $obj->match(foo => 'bar') >>.
 
+=item allow_missing_methods
+
+If set to true, matching against a method that doesn't exist is treated as though matching against undef. Otherwise, the match call dies.
+
 =back
 
 =cut
